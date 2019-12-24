@@ -20,6 +20,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#000000"
-
+        android:background="@drawable/edit_bg"
+        android:hint="Type something here..."
+        android:maxLines="2"
         />
 </LinearLayout>

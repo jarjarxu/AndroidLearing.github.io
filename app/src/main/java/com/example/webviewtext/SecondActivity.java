@@ -6,18 +6,22 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class SecondActivity extends BasicActivity{
     WebView mWebview;
     WebSettings mWebSettings;
-    TextView beginLoading,endLoading,loading,mtitle;
+ //   TextView beginLoading,endLoading,loading,mtitle;
+    TextView loading;
+    ProgressBar progressBar;
 
     public static void actionStart(Context context,String data1,String data2){
         Intent intent=new Intent(context,SecondActivity.class);
@@ -34,10 +38,11 @@ public class SecondActivity extends BasicActivity{
         Toast.makeText(SecondActivity.this,"Welcome to baidu!",Toast.LENGTH_SHORT).show();
 
         mWebview = (WebView) findViewById(R.id.webView1);
-        beginLoading = (TextView) findViewById(R.id.text_beginLoading);
-        endLoading = (TextView) findViewById(R.id.text_endLoading);
+//        beginLoading = (TextView) findViewById(R.id.text_beginLoading);
+//        endLoading = (TextView) findViewById(R.id.text_endLoading);
         loading = (TextView) findViewById(R.id.text_Loading);
-        mtitle = (TextView) findViewById(R.id.title);
+//        mtitle = (TextView) findViewById(R.id.title);
+        progressBar=findViewById(R.id.progress);
 
         mWebSettings = mWebview.getSettings();
 
@@ -58,11 +63,11 @@ public class SecondActivity extends BasicActivity{
 
 
             //获取网站标题
-            @Override
-            public void onReceivedTitle(WebView view, String title) {
-                System.out.println("标题在这里");
-                mtitle.setText(title);
-            }
+//            @Override
+//            public void onReceivedTitle(WebView view, String title) {
+//                System.out.println("标题在这里");
+//                mtitle.setText(title);
+//            }
 
 
             //获取加载进度
@@ -71,31 +76,32 @@ public class SecondActivity extends BasicActivity{
                 if (newProgress < 100) {
                     String progress = newProgress + "%";
                     loading.setText(progress);
+                    progressBar.setVisibility(View.VISIBLE);
                 } else if (newProgress == 100) {
-                    String progress = newProgress + "%";
-                    loading.setText(progress);
+                    loading.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
                 }
             }
         });
 
 
         //设置WebViewClient类
-        mWebview.setWebViewClient(new WebViewClient() {
-            //设置加载前的函数
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                System.out.println("开始加载了");
-                beginLoading.setText("开始加载了");
-
-            }
-
-            //设置结束加载函数
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                endLoading.setText("结束加载了");
-
-            }
-        });
+//        mWebview.setWebViewClient(new WebViewClient() {
+//            //设置加载前的函数
+//            @Override
+//            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+//                System.out.println("开始加载了");
+//                beginLoading.setText("开始加载了");
+//
+//            }
+//
+//            //设置结束加载函数
+//            @Override
+//            public void onPageFinished(WebView view, String url) {
+//                endLoading.setText("结束加载了");
+//
+//            }
+//        });
     }
 
     //点击返回上一页面而不是退出浏览器
