@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -25,7 +27,7 @@ public class SecondActivity extends BasicActivity{
  //   TextView beginLoading,endLoading,loading,mtitle;
     TextView loading,mtitle;
     ProgressBar progressBar;
-    Button button1;
+    Button button1,button2;
 
     private IntentFilter intentFilter;
     private NetworkChangeReciver network;
@@ -118,11 +120,20 @@ public class SecondActivity extends BasicActivity{
 //
 //            }
 //        });
+
+        //结束当前活动,返回上一活动页面
         button1=findViewById(R.id.title_back);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+        button2=findViewById(R.id.edit_text);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mWebview.reload();
             }
         });
     }
@@ -155,9 +166,14 @@ public class SecondActivity extends BasicActivity{
     class NetworkChangeReciver extends BroadcastReceiver {
 
         @Override
-        public void onReceive(Context arg0, Intent arg1) {
-            // TODO Auto-generated method stub
-            Toast.makeText(arg0, "network changes", Toast.LENGTH_SHORT).show();
+        public void onReceive(Context context, Intent intent) {
+            ConnectivityManager connectivityManager =(ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo=connectivityManager.getActiveNetworkInfo();
+            if(networkInfo != null && networkInfo.isAvailable()){
+                Toast.makeText(context,"network is available",Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(context,"network is unavailable",Toast.LENGTH_SHORT).show();
+            }
 
         }
     }
