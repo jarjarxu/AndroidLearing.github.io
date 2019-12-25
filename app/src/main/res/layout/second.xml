@@ -7,7 +7,7 @@
 
     tools:context=".SecondActivity">
 
-
+<include layout="@layout/title"/>
 <!--    &lt;!&ndash; 获取网站的标题&ndash;&gt;-->
 <!--    <TextView-->
 <!--        android:id="@+id/title"-->

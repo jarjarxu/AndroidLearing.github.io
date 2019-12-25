@@ -1,10 +1,10 @@
 package com.example.webviewtext;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,16 +12,23 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
 
 public class SecondActivity extends BasicActivity{
     WebView mWebview;
     WebSettings mWebSettings;
  //   TextView beginLoading,endLoading,loading,mtitle;
-    TextView loading;
+    TextView loading,mtitle;
     ProgressBar progressBar;
+    Button button1;
+
+    private IntentFilter intentFilter;
+    private NetworkChangeReciver network;
 
     public static void actionStart(Context context,String data1,String data2){
         Intent intent=new Intent(context,SecondActivity.class);
@@ -35,13 +42,22 @@ public class SecondActivity extends BasicActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.second);
+        ActionBar actionBar=getSupportActionBar();
+        if(actionBar!=null){
+            actionBar.hide();
+        }
+        intentFilter =new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        network =new NetworkChangeReciver();
+        registerReceiver(network,intentFilter);
+
         Toast.makeText(SecondActivity.this,"Welcome to baidu!",Toast.LENGTH_SHORT).show();
 
         mWebview = (WebView) findViewById(R.id.webView1);
 //        beginLoading = (TextView) findViewById(R.id.text_beginLoading);
 //        endLoading = (TextView) findViewById(R.id.text_endLoading);
         loading = (TextView) findViewById(R.id.text_Loading);
-//        mtitle = (TextView) findViewById(R.id.title);
+        mtitle = (TextView) findViewById(R.id.title_text);
         progressBar=findViewById(R.id.progress);
 
         mWebSettings = mWebview.getSettings();
@@ -63,11 +79,11 @@ public class SecondActivity extends BasicActivity{
 
 
             //获取网站标题
-//            @Override
-//            public void onReceivedTitle(WebView view, String title) {
-//                System.out.println("标题在这里");
-//                mtitle.setText(title);
-//            }
+            @Override
+            public void onReceivedTitle(WebView view, String title) {
+                System.out.println("标题在这里");
+                mtitle.setText(title);
+            }
 
 
             //获取加载进度
@@ -102,6 +118,13 @@ public class SecondActivity extends BasicActivity{
 //
 //            }
 //        });
+        button1=findViewById(R.id.title_back);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     //点击返回上一页面而不是退出浏览器
@@ -127,5 +150,15 @@ public class SecondActivity extends BasicActivity{
             mWebview = null;
         }
         super.onDestroy();
+        unregisterReceiver(network);
+    }
+    class NetworkChangeReciver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context arg0, Intent arg1) {
+            // TODO Auto-generated method stub
+            Toast.makeText(arg0, "network changes", Toast.LENGTH_SHORT).show();
+
+        }
     }
 }
