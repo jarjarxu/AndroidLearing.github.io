@@ -129,6 +129,7 @@ public class SecondActivity extends BasicActivity{
                 finish();
             }
         });
+        //刷新Webview页面
         button2=findViewById(R.id.edit_text);
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,6 +164,7 @@ public class SecondActivity extends BasicActivity{
         super.onDestroy();
         unregisterReceiver(network);
     }
+    //监听网络是否可用
     class NetworkChangeReciver extends BroadcastReceiver {
 
         @Override
