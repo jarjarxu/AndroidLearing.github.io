@@ -51,6 +51,12 @@
             android:maxLines="1" />
     </LinearLayout>
 
+    <CheckBox
+        android:id="@+id/remember_pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remember the password" />
+
     <Button
         android:id="@+id/login"
         android:layout_width="wrap_content"

@@ -9,7 +9,7 @@
 
 <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="90dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
     <Button
         android:id="@+id/button"
@@ -24,5 +24,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="强制下线广播" />
+    <EditText
+        android:id="@+id/input_text"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:background="@drawable/edit_bg"
+        android:maxLines="1"
+        android:hint="文件存储。。。"/>
+
 </LinearLayout>
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="Save" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create Database"
+        android:textAllCaps="false"/>
 </LinearLayout>

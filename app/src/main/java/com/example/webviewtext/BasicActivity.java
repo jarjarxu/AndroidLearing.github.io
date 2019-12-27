@@ -24,7 +24,7 @@ public class BasicActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         IntentFilter intentFilter=new IntentFilter();
-        intentFilter.addAction("com.example.webviewtext.FORCE_OFFINE");
+        intentFilter.addAction("com.example.webviewtext.FORCE_OFFINE");   //接收到强制下线广播后弹出一个对话框强制下线
         receiver=new ForceOffineReceiver();
         registerReceiver(receiver,intentFilter);
     }
@@ -52,7 +52,7 @@ public class BasicActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int i) {
                     AvtivityCollector.finishAll();
-                    Intent intent =new Intent(context,LoginActivity2.class);
+                    Intent intent =new Intent(context,LoginActivity2.class);    //点击OK返回登录页面
                     context.startActivity(intent);
                 }
             });
